@@ -1,5 +1,3 @@
-# constants file: 
-
 #!/bin/bash
 
 # Colors 
@@ -37,7 +35,7 @@ unset LANG
 
 #
 # Initialize defaults
-# Variable initializing 
+# Variable initializing
     PROGRAM_name=" HashId SecScan"
     PROGRAM_CV="v1.0.0"
     PROGRAM_LV="v1.0.1"

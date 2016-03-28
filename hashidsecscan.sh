@@ -10,7 +10,8 @@
 ##############################################
 
 # Include
-. ./constants
+. include/constants
+. include/functions
 
 UMASK_OPTION="027"
 
@@ -38,5 +39,4 @@ run_tests() {
    BuildDir
    NeedsDir
 }
-. ./functions 
 
