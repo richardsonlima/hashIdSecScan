@@ -66,11 +66,10 @@ NeedsDir(){
 # Description     :
 # Returns         :
 ##############################################
-InitialEnv(){
-      if [ ! -d "${BUILDDIR}" ]; then
+Env(){
+      #if [ ! -d "${BUILDDIR}" ]; then
            echo -e "${WARNNING} [x] Empty directory, creating files ... ${BUILDDIR}/${DIR}  ${NORMAL}";sudo cp * ${BUILDDIR}
            echo -e "${NOTICE} [x] Creating environment ... ${NORMAL}";sudo echo "alias hashidsecscan='/opt/hashId-SecScan/hashidsecscan.sh' " >> ~/.bash_alias
 
-      fi
-  done
+      #fi
 }
