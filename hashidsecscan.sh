@@ -33,7 +33,7 @@ echo -e ""
             sleep 5
 ###
 trap main ERR EXIT
-function main() {
+main() {
    CheckUmask
    MyUser
    BuildDir
