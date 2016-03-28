@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Include
-. include/constants
+source include/constants
 
 ##############################################
 # Name            :
@@ -68,8 +68,8 @@ NeedsDir(){
 ##############################################
 Env(){
       #if [ ! -d "${BUILDDIR}" ]; then
-           echo -e "${WARNNING} [x] Empty directory, creating files ... ${BUILDDIR}/${DIR}  ${NORMAL}";sudo cp * ${BUILDDIR}
+           echo -e "${WARNNING} [x] Empty directory, creating files ... ${BUILDDIR}/${DIR}  ${NORMAL}";sudo cp -Rfa * ${BUILDDIR}
            echo -e "${NOTICE} [x] Creating environment ... ${NORMAL}";sudo echo "alias hashidsecscan='/opt/hashId-SecScan/hashidsecscan.sh' " >> ~/.bash_alias
-           echo -e "${NOTICE} [x] Enabling environment ... ${NORMAL}";sudo . ~/.bash_alias
+           echo -e "${NOTICE} [x] Enabling environment ... ${NORMAL}";sudo source ~/.bash_alias
       #fi
 }

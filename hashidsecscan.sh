@@ -10,8 +10,8 @@
 ##############################################
 
 # Include
-. include/constants
-. include/functions
+source include/constants
+source include/functions
 
 echo -e ""
             echo -e "      ==============================================================================="
