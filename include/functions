@@ -38,7 +38,7 @@ MyUser(){
 # Returns         :
 ##############################################
 BuildDir(){
-  BUILDDIR="/opt/HashId-SecScan"
+  BUILDDIR="/opt/hashId-SecScan"
   if [ ! -d ${BUILDDIR} ]; then
       echo -e "${WARNNING} [x] ${BUILDDIR} not found ${NORMAL}"
       echo -e "${WARNNING} Hint:  Missing directory, creating ${BUILDDIR} ${NORMAL}";sudo mkdir -p ${BUILDDIR}
@@ -57,6 +57,20 @@ NeedsDir(){
   for dir in ${NEEDSDIR}; do
       if [ ! -d "${BUILDDIR}/${DIR}" ]; then
            echo -e "${WARNNING} [x] Missing directory, creating ${BUILDDIR}/${DIR}  ${NORMAL}";sudo mkdir -p ${BUILDDIR}/${DIR}
+      fi
+  done
+}
+
+##############################################
+# Name            :
+# Description     :
+# Returns         :
+##############################################
+InitialEnv(){
+      if [ ! -d "${BUILDDIR}" ]; then
+           echo -e "${WARNNING} [x] Empty directory, creating files ... ${BUILDDIR}/${DIR}  ${NORMAL}";sudo cp * ${BUILDDIR}
+           echo -e "${NOTICE} [x] Creating environment ... ${NORMAL}";sudo echo "alias hashidsecscan='/opt/hashId-SecScan/hashidsecscan.sh' " >> ~/.bash_alias
+
       fi
   done
 }
