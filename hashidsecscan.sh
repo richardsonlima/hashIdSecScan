@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ##############################################
 #  HashId SecScan 2016 by Richardson Lima
@@ -13,9 +13,6 @@
 . include/constants
 . include/functions
 
-UMASK_OPTION="027"
-
-###
 echo -e ""
             echo -e "      ==============================================================================="
             echo -e "        ${NOTICE} ${PROGRAM_name} ${NORMAL}"
@@ -31,7 +28,7 @@ echo -e ""
             echo -e "      ==============================================================================="
             echo -e ""
             sleep 5
-###
+
 trap main ERR EXIT
 main() {
    CheckUmask
