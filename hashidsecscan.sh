@@ -35,4 +35,5 @@ main() {
    MyUser
    BuildDir
    NeedsDir
+   InitialEnv
 }
