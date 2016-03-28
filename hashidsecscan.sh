@@ -1,8 +1,8 @@
-#!/bin/sh 
+#!/bin/sh
 
 ##############################################
 #  HashId SecScan 2016 by Richardson Lima
-#  
+#
 #
 #
 #
@@ -32,11 +32,10 @@ echo -e ""
             echo -e ""
             sleep 5
 ###
-trap run_tests ERR EXIT
-run_tests() { 
+trap main ERR EXIT
+function main() {
    CheckUmask
    MyUser
    BuildDir
    NeedsDir
 }
-
