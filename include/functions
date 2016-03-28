@@ -9,9 +9,10 @@ source include/constants
 # Returns         :
 ##############################################
 CheckUmask(){
-  umask $UMASK_OPTION
+
   if [ $? -eq 0 ]; then
-       echo -e "${OK} [*] Setting umask to ${UMASK_OPTION} ${NORMAL}"
+       echo "Usually servers can have a more strict umask like (027), where desktops may be less strict (022)."
+       echo -e "${OK} [*] Setting umask: ${NORMAL}"; umask $UMASK_OPTION && echo $UMASK_OPTION
      else
        echo -e "${WARNNING} [x] Could not set umask ${NORMAL}"
   fi
@@ -40,10 +41,10 @@ MyUser(){
 BuildDir(){
   BUILDDIR="/opt/hashId-SecScan"
   if [ ! -d ${BUILDDIR} ]; then
-      echo -e "${WARNNING} [x] ${BUILDDIR} not found ${NORMAL}"
+      echo -e "${WARNNING} [x] Directory ${BUILDDIR} not found ${NORMAL}"
       echo -e "${WARNNING} Hint:  Missing directory, creating ${BUILDDIR} ${NORMAL}";sudo mkdir -p ${BUILDDIR}
     else
-      echo -e "${NOTICE} [+] BuildDir: ${BUILDDIR} ${NORMAL}"
+      echo -e "${NOTICE} [+] BuildDir found: ${BUILDDIR} ${NORMAL}"
   fi
 }
 
@@ -54,9 +55,11 @@ BuildDir(){
 ##############################################
 NeedsDir(){
   NEEDSDIR="build db main main/tmp include"
-  for dir in ${NEEDSDIR}; do
+  for DIR in ${NEEDSDIR}; do
       if [ ! -d "${BUILDDIR}/${DIR}" ]; then
            echo -e "${WARNNING} [x] Missing directory, creating ${BUILDDIR}/${DIR}  ${NORMAL}";sudo mkdir -p ${BUILDDIR}/${DIR}
+        else
+          echo -e "${OK} [+] SubBuildDir found: ${BUILDDIR}/${DIR} ${NORMAL}"
       fi
   done
 }
@@ -67,9 +70,13 @@ NeedsDir(){
 # Returns         :
 ##############################################
 Env(){
-      #if [ ! -d "${BUILDDIR}" ]; then
-           echo -e "${WARNNING} [x] Empty directory, creating files ... ${BUILDDIR}/${DIR}  ${NORMAL}";sudo cp -Rfa * ${BUILDDIR}
-           echo -e "${NOTICE} [x] Creating environment ... ${NORMAL}";sudo echo "alias hashidsecscan='/opt/hashId-SecScan/hashidsecscan.sh' " >> ~/.bash_alias
-           echo -e "${NOTICE} [x] Enabling environment ... ${NORMAL}";source ~/.bash_alias
-      #fi
+      FILES01="${BUILDDIR}/include/functions"
+      #FILES02="${BUILDDIR}/include/constants"
+      if [ ! -f "${FILES01}" ]; then
+           echo -e "${WARNNING} [x] Include files not found in include directory, creating files in ${BUILDDIR}/include ${NORMAL}";sudo cp -Rfa include/{constants,functions} ${BUILDDIR}/include/
+           echo -e "${NOTICE} [x] Creating alias in user environment ... ${NORMAL}";sudo echo "alias hashidsecscan='/opt/hashId-SecScan/hashidsecscan.sh' " >> ~/.bash_alias
+           echo -e "${NOTICE} [x] Enabling alias in user environment ... ${NORMAL}";source ~/.bash_alias
+        else
+          echo -e "${OK} [+] Files found in include directory: ${BUILDDIR}/include ${NORMAL}"
+      fi
 }

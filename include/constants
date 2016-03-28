@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Colors 
+# Colors
 
     NORMAL="\033[1;39m"
     WARNING="\033[1;31m"          # Bad (red)
@@ -33,6 +33,8 @@ ETC_PATHS="/etc /usr/local/etc"
 # Do not use specific language, fall back to default
 unset LANG
 
+#
+UMASK_OPTION="027"
 #
 # Initialize defaults
 # Variable initializing
