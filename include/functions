@@ -27,7 +27,7 @@ MyUser(){
   IM=`whoami`
   if [ "${IM}" = "root" ]; then
       echo -e "${WARNING} [x] This programm should not be executed as root ${NORMAL}"
-      exit 0
+      return 0
   else
       echo -e "${OK} [+] User: ${NORMAL}" ${IM}
     fi
@@ -58,8 +58,8 @@ BuildDir(){
 NeedsDir(){
 NEEDSDIR="include db logs"
 for DIR in ${BUILDDIR}/${NEEDSDIR}; do
-  #if [ -d "$DIR" -a ! -h "$DIR" ]; then
-  if [ ! -d ${DIR} ]; then
+  if [ ! -d "${DIR}" -a ! -h "${DIR}" ]; then
+  #if [ ! -d ${DIR} ]; then
     echo -e "${WARNING} [x] Directory not found: ${NORMAL}" ${DIR}
     echo -e "${WARNING} [x] Hint:  Missing directory ... ${NORMAL}"
     echo -e "${OK} [+] Creating directory in: ${NORMAL}" ${DIR} ; sudo mkdir -p ${DIR}
