@@ -12,7 +12,7 @@ CheckUmask(){
 
   if [ $? -eq 0 ]; then
        echo "Usually servers can have a more strict umask like (027), where desktops may be less strict (022)."
-       echo -e "${OK} [*] Setting umask: ${NORMAL}"; umask $UMASK_OPTION && echo $UMASK_OPTION
+       echo -e "${OK} [+] Setting umask: ${NORMAL}"; umask $UMASK_OPTION && echo $UMASK_OPTION
      else
        echo -e "${WARNING} [x] Could not set umask ${NORMAL}"
   fi
@@ -58,7 +58,8 @@ BuildDir(){
 NeedsDir(){
 NEEDSDIR="include db logs"
 for DIR in ${BUILDDIR}/${NEEDSDIR}; do
-  if [ -d "$DIR" -a ! -h "$DIR" ]; then
+  #if [ -d "$DIR" -a ! -h "$DIR" ]; then
+  if [ -d "$DIR" ]; then
      echo -e "${NOTICE} [+] Directory found: ${NORMAL}" ${DIR}
 else
      echo -e "${WARNING} [x] Directory not found: ${NORMAL}" ${DIR}
