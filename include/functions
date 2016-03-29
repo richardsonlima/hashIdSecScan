@@ -43,9 +43,9 @@ BuildDir(){
   if [ ! -d ${BUILDDIR} ]; then
       echo -e "${WARNING} [x] Directory not found: ${NORMAL}" ${BUILDDIR}
       echo -e "${WARNING} Hint:  Missing directory ... ${NORMAL}"
-      echo -e "${OK} Creating directory in: ${NORMAL}" ${BUILDDIR} ;sudo mkdir -p ${BUILDDIR}
+      echo -e "${OK} [+] Creating directory in: ${NORMAL}" ${BUILDDIR} ;sudo mkdir -p ${BUILDDIR}
     else
-      echo -e "${OK} [+] BuildDir found: ${NORMAL}" ${BUILDDIR}
+      echo -e "${NOTICE} [+] BuildDir found: ${NORMAL}" ${BUILDDIR}
   fi
 }
 
@@ -59,11 +59,11 @@ NeedsDir(){
 NEEDSDIR="include db logs"
 for DIR in ${BUILDDIR}/${NEEDSDIR}; do
   if [ -d "$DIR" -a ! -h "$DIR" ]; then
-     echo -e "${OK} [+] Directory found: ${NORMAL}" ${DIR}
+     echo -e "${NOTICE} [+] Directory found: ${NORMAL}" ${DIR}
 else
      echo -e "${WARNING} [x] Directory not found: ${NORMAL}" ${DIR}
      echo -e "${WARNING} [x] Hint:  Missing directory ... ${NORMAL}"
-     echo -e "${OK} Creating directory in: ${NORMAL}" ${DIR} ; sudo mkdir -p ${DIR}
+     echo -e "${OK} [+] Creating directory in: ${NORMAL}" ${DIR} ; sudo mkdir -p ${DIR}
 fi
 done
 }
