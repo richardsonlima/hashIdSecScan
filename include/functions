@@ -42,7 +42,8 @@ BuildDir(){
   BUILDDIR="/opt/hashId-SecScan"
   if [ ! -d ${BUILDDIR} ]; then
       echo -e "${WARNING} [x] Directory not found: ${NORMAL}" ${BUILDDIR}
-      echo -e "${WARNING} Hint:  Missing directory, creating directory in: ${NORMAL}" ${BUILDDIR} ;sudo mkdir -p ${BUILDDIR}
+      echo -e "${WARNING} Hint:  Missing directory ... ${NORMAL}"
+      echo -e "${OK} Creating directory in: ${NORMAL}" ${BUILDDIR} ;sudo mkdir -p ${BUILDDIR}
     else
       echo -e "${OK} [+] BuildDir found: ${NORMAL}" ${BUILDDIR}
   fi
@@ -61,7 +62,8 @@ for DIR in ${BUILDDIR}/${NEEDSDIR}; do
      echo -e "${OK} [+] Directory found: ${NORMAL}" ${DIR}
 else
      echo -e "${WARNING} [x] Directory not found: ${NORMAL}" ${DIR}
-     echo -e "${WARNING} [x] Hint:  Missing directory, creating directory in: ${NORMAL}" ${DIR}; sudo mkdir -p ${DIR}
+     echo -e "${WARNING} [x] Hint:  Missing directory ... ${NORMAL}"
+     echo -e "${OK} Creating directory in: ${NORMAL}" ${DIR} ; sudo mkdir -p ${DIR}
 fi
 done
 }
