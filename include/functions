@@ -59,12 +59,12 @@ NeedsDir(){
 NEEDSDIR="include db logs"
 for DIR in ${BUILDDIR}/${NEEDSDIR}; do
   #if [ -d "$DIR" -a ! -h "$DIR" ]; then
-  if [ -d "$DIR" ]; then
-     echo -e "${NOTICE} [+] Directory found: ${NORMAL}" ${DIR}
+  if [ ! -d ${DIR} ]; then
+    echo -e "${WARNING} [x] Directory not found: ${NORMAL}" ${DIR}
+    echo -e "${WARNING} [x] Hint:  Missing directory ... ${NORMAL}"
+    echo -e "${OK} [+] Creating directory in: ${NORMAL}" ${DIR} ; sudo mkdir -p ${DIR}
 else
-     echo -e "${WARNING} [x] Directory not found: ${NORMAL}" ${DIR}
-     echo -e "${WARNING} [x] Hint:  Missing directory ... ${NORMAL}"
-     echo -e "${OK} [+] Creating directory in: ${NORMAL}" ${DIR} ; sudo mkdir -p ${DIR}
+    echo -e "${NOTICE} [+] Directory found: ${NORMAL}" ${DIR}
 fi
 done
 }
