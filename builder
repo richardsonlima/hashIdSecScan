@@ -31,9 +31,21 @@ echo -e ""
 
 trap main ERR EXIT
 main() {
+   echo
+   echo -e "${TITLE} [x] Cheking UMASK ..........................: ${NORMAL}"
    CheckUmask
+   echo
+   echo -e "${TITLE} [x] Cheking current USER ...................: ${NORMAL}"
    MyUser
+   echo
+   echo -e "${TITLE} [x] Cheking BUILDDIR .......................: ${NORMAL}"
    BuildDir
+   echo
+   echo -e "${TITLE} [x] Cheking NEEDSDIR .......................: ${NORMAL}"
    NeedsDir
-   Env
+   echo 
+   echo -e "${TITLE} [x] Cheking INCLUDEFILES ...................: ${NORMAL}"
+   CheckIncludeFiles
+   echo
+
 }

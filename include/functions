@@ -25,12 +25,12 @@ CheckUmask(){
 ##############################################
 MyUser(){
   IM=`whoami`
-  if [ "${IM}" = "" ]; then
-      echo -e "${WARNNING} [x] Could  not determine user ${NORMAL}"
-  fi
   if [ "${IM}" = "root" ]; then
       echo -e "${WARNNING} [x] This programm should not be executed as root ${NORMAL}"
-  fi
+      exit 0
+  else
+      echo -e "${OK} [+] User: ${NORMAL}" ${IM}
+    fi
 }
 
 ##############################################
@@ -41,10 +41,10 @@ MyUser(){
 BuildDir(){
   BUILDDIR="/opt/hashId-SecScan"
   if [ ! -d ${BUILDDIR} ]; then
-      echo -e "${WARNNING} [x] Directory ${BUILDDIR} not found ${NORMAL}"
-      echo -e "${WARNNING} Hint:  Missing directory, creating ${BUILDDIR} ${NORMAL}";sudo mkdir -p ${BUILDDIR}
+      echo -e "${WARNNING} [x] Directory not found: ${NORMAL}" ${BUILDDIR}
+      echo -e "${WARNNING} Hint:  Missing directory, creating directory in: ${NORMAL}" ${BUILDDIR} ;sudo mkdir -p ${BUILDDIR}
     else
-      echo -e "${NOTICE} [+] BuildDir found: ${BUILDDIR} ${NORMAL}"
+      echo -e "${NOTICE} [+] BuildDir found: ${NORMAL}" ${BUILDDIR}
   fi
 }
 
@@ -54,12 +54,12 @@ BuildDir(){
 # Returns         :
 ##############################################
 NeedsDir(){
-  NEEDSDIR="build db main main/tmp include"
+  NEEDSDIR="include db logs"
   for DIR in ${NEEDSDIR}; do
       if [ ! -d "${BUILDDIR}/${DIR}" ]; then
-           echo -e "${WARNNING} [x] Missing directory, creating ${BUILDDIR}/${DIR}  ${NORMAL}";sudo mkdir -p ${BUILDDIR}/${DIR}
+           echo -e "${WARNNING} [x] Missing directory, creating directory in: ${NORMAL}" ${BUILDDIR}/${DIR}; sudo mkdir -p ${BUILDDIR}/${DIR}
         else
-          echo -e "${OK} [+] SubBuildDir found: ${BUILDDIR}/${DIR} ${NORMAL}"
+          echo -e "${OK} [+] SubBuildDir found: ${NORMAL}" ${BUILDDIR}/${DIR}
       fi
   done
 }
@@ -69,14 +69,26 @@ NeedsDir(){
 # Description     :
 # Returns         :
 ##############################################
-Env(){
-      FILES01="${BUILDDIR}/include/functions"
-      #FILES02="${BUILDDIR}/include/constants"
-      if [ ! -f "${FILES01}" ]; then
-           echo -e "${WARNNING} [x] Include files not found in include directory, creating files in ${BUILDDIR}/include ${NORMAL}";sudo cp -Rfa include/{constants,functions} ${BUILDDIR}/include/
-           echo -e "${NOTICE} [x] Creating alias in user environment ... ${NORMAL}";sudo echo "alias hashidsecscan='/opt/hashId-SecScan/hashidsecscan.sh' " >> ~/.bash_alias
-           echo -e "${NOTICE} [x] Enabling alias in user environment ... ${NORMAL}";source ~/.bash_alias
+CheckIncludeFiles(){
+INCLUDE_DIR="/opt/hashId-SecScan/include"
+ls -A ${INCLUDE_DIR}/* &>/dev/null
+       if [ $? = 0 ];then
+           echo -e "${OK} [+] Files found in include directory: ${NORMAL}" ${INCLUDE_DIR}
         else
-          echo -e "${OK} [+] Files found in include directory: ${BUILDDIR}/include ${NORMAL}"
-      fi
+           CreateIncludeFiles
+       fi
+}
+
+##############################################
+# Name            :
+# Description     :
+# Returns         :
+##############################################
+CreateIncludeFiles(){
+           echo -e "${WARNNING} [x] Include files wasn't found in include directory ... ${NORMAL}"
+           echo -e "${OK} [+] Creating files in: ${NORMAL}" ${INCLUDE_DIR}
+           sudo cp -Rfa include/{constants,functions} ${INCLUDE_DIR}
+           echo -e "${NOTICE} [+] Creating alias in user environment ... ${NORMAL}";sudo echo "alias hashidsecscan='/opt/hashId-SecScan/hashidsecscan' " >> ~/.bash_alias
+           echo -e "${NOTICE} [+] Enabling alias in user environment ... ${NORMAL}";source ~/.bash_alias
+
 }
