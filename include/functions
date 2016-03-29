@@ -14,7 +14,7 @@ CheckUmask(){
        echo "Usually servers can have a more strict umask like (027), where desktops may be less strict (022)."
        echo -e "${OK} [*] Setting umask: ${NORMAL}"; umask $UMASK_OPTION && echo $UMASK_OPTION
      else
-       echo -e "${WARNNING} [x] Could not set umask ${NORMAL}"
+       echo -e "${WARNING} [x] Could not set umask ${NORMAL}"
   fi
 }
 
@@ -26,7 +26,7 @@ CheckUmask(){
 MyUser(){
   IM=`whoami`
   if [ "${IM}" = "root" ]; then
-      echo -e "${WARNNING} [x] This programm should not be executed as root ${NORMAL}"
+      echo -e "${WARNING} [x] This programm should not be executed as root ${NORMAL}"
       exit 0
   else
       echo -e "${OK} [+] User: ${NORMAL}" ${IM}
@@ -41,8 +41,8 @@ MyUser(){
 BuildDir(){
   BUILDDIR="/opt/hashId-SecScan"
   if [ ! -d ${BUILDDIR} ]; then
-      echo -e "${WARNNING} [x] Directory not found: ${NORMAL}" ${BUILDDIR}
-      echo -e "${WARNNING} Hint:  Missing directory, creating directory in: ${NORMAL}" ${BUILDDIR} ;sudo mkdir -p ${BUILDDIR}
+      echo -e "${WARNING} [x] Directory not found: ${NORMAL}" ${BUILDDIR}
+      echo -e "${WARNING} Hint:  Missing directory, creating directory in: ${NORMAL}" ${BUILDDIR} ;sudo mkdir -p ${BUILDDIR}
     else
       echo -e "${NOTICE} [+] BuildDir found: ${NORMAL}" ${BUILDDIR}
   fi
@@ -57,7 +57,7 @@ NeedsDir(){
   NEEDSDIR="include db logs"
   for DIR in ${NEEDSDIR}; do
       if [ ! -d "${BUILDDIR}/${DIR}" ]; then
-           echo -e "${WARNNING} [x] Missing directory, creating directory in: ${NORMAL}" ${BUILDDIR}/${DIR}; sudo mkdir -p ${BUILDDIR}/${DIR}
+           echo -e "${WARNING} [x] Missing directory, creating directory in: ${NORMAL}" ${BUILDDIR}/${DIR}; sudo mkdir -p ${BUILDDIR}/${DIR}
         else
           echo -e "${OK} [+] SubBuildDir found: ${NORMAL}" ${BUILDDIR}/${DIR}
       fi
@@ -75,12 +75,12 @@ INCLUDE_DIR="${BUILDDIR}/include"
 #
 
 if sudo find -- "${INCLUDE_DIR}" -prune -type d -empty | grep -q .; then
-  printf '%s\n' "Now ${INCLUDE_DIR} is an empty directory"; CreateIncludeFiles
+  cho -e "${WARNING} [+] Now ${INCLUDE_DIR} is an empty directory ${NORMAL}"; CreateIncludeFiles
 else
   echo -e "${OK} [+] Files found in include directory: ${NORMAL}" ${INCLUDE_DIR}
-  printf >&2 '%s\n' "${INCLUDE_DIR} is not empty, or is not a directory" \
+  echo -e "${OK} [+] Now ${INCLUDE_DIR} is not empty, or is not a directory" \
                     "or is not readable or searchable in which case" \
-                    "you should have seen an error message from find above."
+                    "you should have seen an error message from find above. ${NORMAL}"
 fi
 
 }
@@ -91,7 +91,7 @@ fi
 # Returns         :
 ##############################################
 CreateIncludeFiles(){
-           echo -e "${WARNNING} [x] Include files wasn't found in include directory ... ${NORMAL}"
+           echo -e "${WARNING} [x] Include files wasn't found in include directory ... ${NORMAL}"
            echo -e "${OK} [+] Creating files in: ${NORMAL}" ${INCLUDE_DIR}; sudo cp -Rfa include/{constants,functions} ${INCLUDE_DIR}
            echo -e "${NOTICE} [+] Creating alias in user environment ... ${NORMAL}";sudo echo "alias hashidsecscan='/opt/hashId-SecScan/hashidsecscan' " >> ~/.bash_alias
            echo -e "${NOTICE} [+] Enabling alias in user environment ... ${NORMAL}";source ~/.bash_alias
