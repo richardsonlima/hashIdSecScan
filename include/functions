@@ -70,13 +70,13 @@ NeedsDir(){
 # Returns         :
 ##############################################
 CheckIncludeFiles(){
-INCLUDE_DIR="/opt/hashId-SecScan/include"
-ls -A ${INCLUDE_DIR}/* &>/dev/null
-       if [ $? = 0 ];then
-           echo -e "${OK} [+] Files found in include directory: ${NORMAL}" ${INCLUDE_DIR}
+INCLUDE_DIR="${BUILDDIR}/include"
+
+if ! ls -A ${INCLUDE_DIR}/* > /dev/null 2>&1; then
+          echo -e "${OK} [+] Files found in include directory: ${NORMAL}" ${INCLUDE_DIR}
         else
            CreateIncludeFiles
-       fi
+fi
 }
 
 ##############################################
@@ -86,8 +86,7 @@ ls -A ${INCLUDE_DIR}/* &>/dev/null
 ##############################################
 CreateIncludeFiles(){
            echo -e "${WARNNING} [x] Include files wasn't found in include directory ... ${NORMAL}"
-           echo -e "${OK} [+] Creating files in: ${NORMAL}" ${INCLUDE_DIR}
-           sudo cp -Rfa include/{constants,functions} ${INCLUDE_DIR}
+           echo -e "${OK} [+] Creating files in: ${NORMAL}" ${INCLUDE_DIR}; sudo cp -Rfa include/{constants,functions} ${INCLUDE_DIR}
            echo -e "${NOTICE} [+] Creating alias in user environment ... ${NORMAL}";sudo echo "alias hashidsecscan='/opt/hashId-SecScan/hashidsecscan' " >> ~/.bash_alias
            echo -e "${NOTICE} [+] Enabling alias in user environment ... ${NORMAL}";source ~/.bash_alias
 

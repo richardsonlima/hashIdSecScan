@@ -43,7 +43,7 @@ main() {
    echo
    echo -e "${TITLE} [x] Cheking NEEDSDIR .......................: ${NORMAL}"
    NeedsDir
-   echo 
+   echo
    echo -e "${TITLE} [x] Cheking INCLUDEFILES ...................: ${NORMAL}"
    CheckIncludeFiles
    echo
