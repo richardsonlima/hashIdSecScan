@@ -72,11 +72,17 @@ NeedsDir(){
 CheckIncludeFiles(){
 INCLUDE_DIR="${BUILDDIR}/include"
 
-if ls -A ${INCLUDE_DIR}/* > /dev/null 2>&1; then
-          CreateIncludeFiles
-        else
-          echo -e "${OK} [+] Files found in include directory: ${NORMAL}" ${INCLUDE_DIR}         
+#
+
+if sudo find -- "${INCLUDE_DIR}" -prune -type d -empty | grep -q .; then
+  printf '%s\n' "Now ${INCLUDE_DIR} is an empty directory"; CreateIncludeFiles
+else
+  echo -e "${OK} [+] Files found in include directory: ${NORMAL}" ${INCLUDE_DIR}
+  printf >&2 '%s\n' "${INCLUDE_DIR} is not empty, or is not a directory" \
+                    "or is not readable or searchable in which case" \
+                    "you should have seen an error message from find above."
 fi
+
 }
 
 ##############################################
