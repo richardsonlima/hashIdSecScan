@@ -72,10 +72,10 @@ NeedsDir(){
 CheckIncludeFiles(){
 INCLUDE_DIR="${BUILDDIR}/include"
 
-if ! ls -A ${INCLUDE_DIR}/* > /dev/null 2>&1; then
-          echo -e "${OK} [+] Files found in include directory: ${NORMAL}" ${INCLUDE_DIR}
+if ls -A ${INCLUDE_DIR}/* > /dev/null 2>&1; then
+          CreateIncludeFiles
         else
-           CreateIncludeFiles
+          echo -e "${OK} [+] Files found in include directory: ${NORMAL}" ${INCLUDE_DIR}         
 fi
 }
 
