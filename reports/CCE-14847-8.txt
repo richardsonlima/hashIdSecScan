@@ -1,0 +1,1 @@
+[1;33mMinor: Add or correct the line 'umask 077' in /etc/profile[0m

@@ -27,7 +27,7 @@ MyUser(){
   IM=`whoami`
   if [ "${IM}" = "root" ]; then
       echo -e "${WARNING} [x] This programm should not be executed as root ${NORMAL}"
-      return 0
+      return 1
   else
       echo -e "${OK} [+] User: ${NORMAL}" ${IM}
     fi

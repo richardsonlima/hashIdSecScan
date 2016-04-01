@@ -1,0 +1,1 @@
+[31mMajor: Is this system going to be used as a firewall or gateway to pass IP traffic between different networks? If not, add 'net.ipv4.ip_forward = 0' to /etc/sysctl.conf[0m

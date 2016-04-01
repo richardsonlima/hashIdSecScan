@@ -1,0 +1,2 @@
+[31mMajor: You should not expose your kernel version (\r) through the system login banner, edit /etc/issue[0m
+[1;33mMinor: You should not expose your distribution (Fedora) through the system login banner, edit /etc/issue[0m

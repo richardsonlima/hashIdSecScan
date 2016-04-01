@@ -1,0 +1,87 @@
+#!/bin/bash
+
+##############################################
+#  HashId SecScan 2016 by Richardson Lima
+#
+#
+#
+#
+#
+##############################################
+
+# Include
+. include/constants.sh
+. include/functions.sh
+. ./check
+
+echo -e ""
+            echo -e "      ==============================================================================="
+            echo -e "        ${NOTICE} ${PROGRAM_name} ${NORMAL}"
+            echo -e "      ==============================================================================="
+            echo -e ""
+            echo -e "        Current version : ${YELLOW}${PROGRAM_CV}${NORMAL}   Latest version : ${GREEN}${PROGRAM_LV}${NORMAL}"
+            echo -e ""
+            echo -e "        ${WHITE}Please update to the latest version for new features, bug fixes, tests"
+            echo -e "        and baselines.${NORMAL}"
+            echo -e ""
+            echo -e "        https://www.hashidsecscan.com.br/downloads/"
+            echo -e ""
+            echo -e "      ==============================================================================="
+            echo -e ""
+            sleep 5
+
+trap main ERR EXIT
+
+RunTests(){
+export TESTS=tests
+export REPORTS=reports
+
+. $(dirname $0)/include/main.sh
+cd $(dirname $0)
+
+$VERBOSE && echo "Purging old reports…"
+rm -f $REPORTS/*
+
+$VERBOSE && echo "Running tests…"
+[ "$(ls -A $TESTS)" ] || FATAL "No tests found!"
+
+set +e
+# execute all tests in parallel, yeah Bash!
+find $TESTS -name "*.sh" -print0 | xargs -0 -n1 -P0 ./include/run_test.sh "$ARGS"
+xcode=$?
+set -e
+
+fail=$(wc -l reports/*.txt | tail -1 | awk '{print $1}')
+reports=$(ls $REPORTS | wc -w)
+echo -ne "\x1b\x5b\x32\x4b" # send VT100 escape code ^[[2K to erase the line
+echo "$reports tests ran in $SECONDS seconds."
+
+if [ $fail -eq 0 ]; then
+    SUCCESS "All tests passed, your system seems quite secure!"
+else
+    WARNING "$fail problems detected:"
+    grep '' $REPORTS/*.txt | sed -r 's@.*/(.*)\.txt:(.*)$@\1 \t\2@' >&2
+fi
+
+# create the output file if requested
+[ "$OUTPUT_FILE" ] && \
+    find $REPORTS -name "*.txt" -not -empty | sed -r 's@.*/(.*)\.txt$@\1@' > $OUTPUT_FILE
+
+$VERBOSE && echo "Done."
+
+exit $fail
+}
+
+main() {
+   echo
+   echo -e "${TITLE} [x] Cheking UMASK ..........................: ${NORMAL}"
+   CheckUmask
+   echo
+   echo -e "${TITLE} [x] Cheking current USER ...................: ${NORMAL}"
+   MyUser
+   echo
+   echo -e "${TITLE} [x] Scanning System  .......................: ${NORMAL}"
+   RunTests 
+   echo
+
+}

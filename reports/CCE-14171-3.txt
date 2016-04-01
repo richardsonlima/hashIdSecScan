@@ -1,0 +1,1 @@
+[1;33mMinor: Create separate partition or logical volume for /var/log/audit[0m
