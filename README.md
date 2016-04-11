@@ -1,5 +1,13 @@
 
-# hashidsecscan
+# HashId Sec Scan
+
+* About HSS (HashId Sec Scan) :+1:
+HSS (HashId Sec Scan) is an open-source system configuration security scanner. It is intended to be used by Systems Administrators and professional penetration testers.
+
+* Features
+-
+-
+-
 
 * About CCE :+1:
 
