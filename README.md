@@ -4,11 +4,6 @@
 * About HSS (HashId Sec Scan) :+1:
 HSS (HashId Sec Scan) is an open-source system configuration security scanner. It is intended to be used by Systems Administrators and professional penetration testers.
 
-* Features
--
--
--
-
 * About CCE :+1:
 
 The CCE List provides unique identifiers to security-related system configuration issues in order to improve workflow by facilitating fast and accurate correlation of configuration data across multiple information sources and tools.
